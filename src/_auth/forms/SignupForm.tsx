@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { SignupValidation } from '@/lib/validation';
 import Loader from '@/components/ui/shared/Loader';
 import { Link } from 'react-router-dom';
+import { createUserAccount } from '@/lib/appwrite/api';
 
 const SignupForm = () => {
   const isLoading = false;
@@ -28,7 +29,9 @@ const SignupForm = () => {
     },
   });
   async function onSubmit(values: z.infer<typeof SignupValidation>) {
-    console.log('criando usuario', values);
+    const newUser = await createUserAccount(values);
+
+    console.log(newUser);
   }
 
   return (
@@ -99,7 +102,7 @@ const SignupForm = () => {
               <FormItem>
                 <FormLabel>password</FormLabel>
                 <FormControl>
-                  <Input type="email" className="shad-input" {...field} />
+                  <Input type="password" className="shad-input" {...field} />
                 </FormControl>
 
                 <FormMessage />
